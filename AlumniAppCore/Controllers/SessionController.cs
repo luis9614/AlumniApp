@@ -34,25 +34,40 @@ namespace AlumniAppCore.Controllers
 
         [HttpPost]
         public IActionResult LogIn(UserLogIn user){
+            UserCreator UserFactory = new UserCreator();
             string message = "";
 
             if (ModelState.IsValid)
             {
                 DBConnection UserDB = DBConnection.GetInstance;
-                LogInReponseDto response = UserDB.LogIn(user.UserName, user.UserPassword);
-                if(response.HasError){
-                    String serializedUser = JsonConvert.SerializeObject(response.LoggedUser);
-                    return View();
+                User CurrentUser = UserFactory.LogInUser(user);
+                if(CurrentUser != null)
+                {
+                    TempData["User"] = CurrentUser.UserName;
+                    TempData["Password"] = CurrentUser.Password;
+                    return RedirectToAction("Overview", "Home");
+                    //return Content(CurrentUser.ToString());
                 }else{
-                    message = "Failed to log in. If your inPlease try again";
+                    message = "Failed to log in. Your information does not match any record in our database.\nIf your information was correct contact your admin.\n\nPlease try again";
                 }
-                message = user.ToString() + "\n" + response.HasError.ToString() + "\n" + response.LoggedUser.Address + "\n" + response.LoggedUser.IdUserType + "\nTXT Export = " + _configuration.Value.ExportTXT;
             }
             else
             {
-                message = "Failed to log in. If your inPlease try again";
+                message = "Failed to log in. Unformatted information .\n\nPlease try again";
             }
-            return Content(message);
+            return RedirectToAction("Messages", "Home", new { Message = message });
+
         }
+
+        /*[HttpGet]
+        public IActionResult GetUser(string Name, string LastName, string SecondLastName, string FullName, string Address, string EMail, string Password, string UserName, int IdUser, int AccountType){
+            UserCreator UserFactory = new UserCreator();
+            User newUser = UserFactory.CreateUser(AccountType, Name, LastName, SecondLastName, FullName,Address, EMail, Password, UserName, IdUser);
+            //CreateUser(int AccountType, string Name, string LastName, string SecondLastName, string FullName, string Address, string EMail, string Password, string UserName, int IdUser)
+            TempData["CurrentUser"] = JsonConvert.SerializeObject(newUser) ;
+            TempData["LOL"] = newUser.ToString();
+            //return Content(newUser.ToString());
+            return RedirectToAction("Overview", "Home");
+        }*/
     }
 }

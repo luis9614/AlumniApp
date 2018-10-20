@@ -3,11 +3,11 @@ namespace AlumniAppCore.Models
 {
     public class UserLogIn
     {
-        public String UserName
+        public string UserName
         {
             get;
             set;
-        }public String UserPassword
+        }public string UserPassword
         {
             get;
             set;
@@ -15,7 +15,7 @@ namespace AlumniAppCore.Models
         public UserLogIn()
         {
         }
-        public UserLogIn(String UserName, String UserPassword)
+        public UserLogIn(string UserName, string UserPassword)
         {
             this.UserName = UserName;
             this.UserPassword = UserPassword;

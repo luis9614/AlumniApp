@@ -24,4 +24,9 @@
       <HintPath>lib\Alumni.App.Db.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Views\Home\ErrorView.cshtml" />
+    <None Remove="Views\Home\Messages.css" />
+    <None Remove="Views\Home\Messages.css" />
+  </ItemGroup>
 </Project>

@@ -5,38 +5,43 @@ namespace AlumniAppCore.Models
     public abstract class User
     {
         public Boolean[] Permissions = new Boolean[5];
-        public String Name
+        public string Name
         {
             get;
             set;
         }
 
-        public String LastName
+        public string LastName
         {
             get;
             set;
         }
-        public String EMail
+        public string EMail
         {
             get;
             set;
         }
-        public String Address
+        public string Address
         {
             get;
             set;
         }
-        public String Password
+        public string Password
         {
             get;
             set;
         }
-        public String SecondLastName
+        public string SecondLastName
         {
             get;
             set;
         }
-        public String UserName
+        public string FullName
+        {
+            get;
+            set;
+        }
+        public string UserName
         {
             get;
             set;
@@ -52,5 +57,9 @@ namespace AlumniAppCore.Models
             set;
         }
         public abstract void SetPermissions();
+        public override string ToString()
+        {
+            return Name + " " + LastName + " " + SecondLastName + "\ne-mail: " + EMail + " (" + UserName + ")\nId: " + IdUser + "\nAccountType: "+ IdAccountType + "\n";
+        }
     }
 }

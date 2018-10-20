@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model AlumniAppCore.Models.User
+@{
+
+}
+<div class="container">
+    <br />
+    <h1>@Model.Name 's Mainboard </h1>
+    <br />
+</div>
+
+<div class="container">
+    <div class="row container" style="margin: auto;">
+        @foreach (var opt in ViewData["Options"] as IList<Feature>)
+        {
+                <div class="container col-sm-4">
+                    <div class="card">
+                        <!-- Card image -->
+                        <img class="card-img-top" src="~/images/students.jpg" alt="Card image cap">
+                        <!-- Card content -->
+                        <div class="card-body">
+                            <!-- Title -->
+                            <h4 class="card-title"><a>@opt.Title</a></h4>
+                            <!-- Text -->
+                            <p class="card-text">@opt.Description</p>
+                            <!-- Button -->
+                            <input type="button" class="btn btn-outline-dark" value="LogIn" onclick="location.href='@Url.Action("LogIn", "Session")'" />
+                        </div>
+                    </div>
+                </div>
+        }
+    </div>
+</div>
+
+
+
+
+
