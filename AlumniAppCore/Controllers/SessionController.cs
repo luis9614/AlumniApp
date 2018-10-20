@@ -9,6 +9,7 @@ using Alumni.App.Db.DTO;
 using AlumniAppCore.Controllers;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -39,12 +40,17 @@ namespace AlumniAppCore.Controllers
             {
                 DBConnection UserDB = DBConnection.GetInstance;
                 LogInReponseDto response = UserDB.LogIn(user.UserName, user.UserPassword);
-
+                if(response.HasError){
+                    String serializedUser = JsonConvert.SerializeObject(response.LoggedUser);
+                    return View();
+                }else{
+                    message = "Failed to log in. If your inPlease try again";
+                }
                 message = user.ToString() + "\n" + response.HasError.ToString() + "\n" + response.LoggedUser.Address + "\n" + response.LoggedUser.IdUserType + "\nTXT Export = " + _configuration.Value.ExportTXT;
             }
             else
             {
-                message = "Failed to log in the product. Please try again";
+                message = "Failed to log in. If your inPlease try again";
             }
             return Content(message);
         }
