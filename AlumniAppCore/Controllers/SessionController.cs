@@ -4,6 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AlumniAppCore.Models;
+using Alumni.App.Db;
+using Alumni.App.Db.DTO;
+using AlumniAppCore.Controllers;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,6 +16,10 @@ namespace AlumniAppCore.Controllers
 {
     public class SessionController : Controller
     {
+        private readonly IOptions<AlumniConfig> _configuration;
+        public SessionController(IOptions<AlumniConfig> configuration){
+            this._configuration = configuration;
+        }
         // GET: /<controller>/
         public IActionResult Index()
         {
@@ -19,7 +28,6 @@ namespace AlumniAppCore.Controllers
 
         [HttpGet]
         public IActionResult LogIn(){
-
             return View();
         }
 
@@ -29,7 +37,10 @@ namespace AlumniAppCore.Controllers
 
             if (ModelState.IsValid)
             {
-                message = user.ToString();
+                DBConnection UserDB = DBConnection.GetInstance;
+                LogInReponseDto response = UserDB.LogIn(user.UserName, user.UserPassword);
+
+                message = user.ToString() + "\n" + response.HasError.ToString() + "\n" + response.LoggedUser.Address + "\n" + response.LoggedUser.IdUserType + "\nTXT Export = " + _configuration.Value.ExportTXT;
             }
             else
             {

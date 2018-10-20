@@ -14,9 +14,19 @@ namespace AlumniAppCore
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        /*public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+        }*/
+
+        public Startup(IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -33,6 +43,11 @@ namespace AlumniAppCore
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            //services.Configure<Expo>
+            services.Configure<AlumniConfig>(Configuration.GetSection("ExportOptions"));
+            // Added Singleton for configuration file
+            services.AddSingleton<IConfiguration>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +66,6 @@ namespace AlumniAppCore
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseStaticFiles();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

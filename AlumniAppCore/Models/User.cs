@@ -1,10 +1,18 @@
 ﻿using System;
 namespace AlumniAppCore.Models
 {
-    public class User
+    public abstract class User
     {
-        public User()
+        public String Name
         {
+            get;
+            set;
+        }
+
+        public String MyProperty
+        {
+            get;
+            set;
         }
     }
 }

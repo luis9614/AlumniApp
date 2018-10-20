@@ -15,6 +15,11 @@ namespace AlumniAppCore.Controllers
             return View();
         }
 
+        public IActionResult Overview(User current_User){
+
+            return View();
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
