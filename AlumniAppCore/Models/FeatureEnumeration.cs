@@ -62,8 +62,8 @@ namespace AlumniAppCore.Models
 
     public class FeatureManager{
         public static Feature[] Features = {
-            new Feature( "My Grades", "See a detailed view of my semester.", "MyCals", "Academic", "~/images/cals.jpg", "Check Grades"),
-            new Feature( "My Profile", "See a detailed view of my profile.", "MyProfile", "Academic", "~/images/data.jpg", "View"),
+            new Feature( "My Grades", "See a detailed view of my semester.", "MyCals", "Academic", "~/images/mycals.jpg", "Check Grades"),
+            new Feature( "My Profile", "See a detailed view of my profile.", "MyProfile", "Academic", "~/images/profile.png", "View"),
             new Feature( "My Info", "See a detailed view of my information.", "MyCals", "Academic", "~/images/cals.jpg", "View"),
             new Feature( "Grades", "See a detailed view of the whole group's grades.", "AllCals", "Academic", "~/images/classroom.jpg", "All Grades"),
             new Feature( "Download my Grades", "Download a copy of my semester's grades.", "Download Cals", "Academic", "~/images/grades.jpg", "Download")

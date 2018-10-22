@@ -36,11 +36,9 @@ namespace AlumniAppCore.Controllers
             User CurrentUser = UserFactory.LogInUser(HttpContext.Session.GetString(CookieKeys.USERNAME), HttpContext.Session.GetString(CookieKeys.PASSWORD));
 
             if(CurrentUser!=null && CurrentUser.Permissions[(int)FeatureEnumeration.OWN_CALS]){
-                List<UserSubjectDto> Subjects = _db._service.GetSubjectsAndGradesByUser(CurrentUser.IdUser);
-                //AcademicService Service = GradesAdapter.GetInstance;
                 IGrades ServiceAdapter = new GradesAdapter();
                 DataTable Grades = ServiceAdapter.GetGrades(CurrentUser.IdUser);
-                return View(Subjects);
+                return View(Grades);
             }
             return RedirectToAction("Messages", "Home", new { Message = UtilMessages.NO_CREDENTIALS });
 
@@ -50,10 +48,12 @@ namespace AlumniAppCore.Controllers
         {
             User CurrentUser = UserFactory.LogInUser(HttpContext.Session.GetString(CookieKeys.USERNAME), HttpContext.Session.GetString(CookieKeys.PASSWORD));
 
-            if (CurrentUser != null && CurrentUser.Permissions[(int)FeatureEnumeration.OWN_CALS])
+            if (CurrentUser != null && CurrentUser.Permissions[(int)FeatureEnumeration.OWN_PROFILE])
             {
-                UserDto Profile = _dbUser._service.GetProfile(CurrentUser.IdUser);
-                
+                //UserDto Profile = _dbUser._service.GetProfile(CurrentUser.IdUser);
+                IProfile ProfileAdapter = new ProfileAdapter();
+                DataTable Profile = ProfileAdapter.GetProfile(CurrentUser.IdUser);
+
 
                 return View(Profile);
             }

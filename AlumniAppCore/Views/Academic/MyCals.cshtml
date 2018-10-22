@@ -1,7 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model List<Alumni.App.Db.DTO.UserSubjectDto>
+@model System.Data.DataTable
 @{
 }
 <div class="container">
@@ -13,24 +13,22 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Subject</th>
-                <th scope="col">First Term</th>
-                <th scope="col">Second Term</th>
-                <th scope="col">Final Term</th>
-                <th scope="col">Average</th>
+                @foreach(System.Data.DataColumn col in Model.Columns)
+                {
+                    <th scope="col">@col.Caption</th>
+                }
             </tr>
         </thead>
         <tbody>
-            @foreach (var Subject in Model)
-        {
-            <tr>
-                <th scope="row">@Subject.SubjectName</th>
-                <td>@Subject.Grade1</td>
-                <td>@Subject.Grade2</td>
-                <td>@Subject.Grade3</td>
-                <td>@Subject.AverageSubject</td>
-            </tr>
-    }
+            @foreach (System.Data.DataRow row in Model.Rows)
+            {
+                <tr>
+                    @foreach(var cell in row.ItemArray)
+                    {
+                        <td>@cell.ToString()</td>
+                    }
+                </tr>
+            }
         </tbody>
     </table>
 </div>
