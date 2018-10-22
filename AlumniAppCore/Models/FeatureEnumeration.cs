@@ -44,24 +44,29 @@ namespace AlumniAppCore.Models
             get;
             set;
         }
+        public string Button{
+            get;
+            set;
+        }
 
-        public Feature(string title, string description, string method, string controller, string imageUrl)
+        public Feature(string title, string description, string method, string controller, string imageUrl, string button)
         {
             Title = title;
             Description = description;
             Method = method;
             Controller = controller;
             ImageUrl = imageUrl;
+            Button = button;
         }
     }
 
     public class FeatureManager{
         public static Feature[] Features = {
-            new Feature( "My Grades", "See a detailed view of my semester.", "MyCals", "Academic", "~/images/cals.jpg"),
-            new Feature( "My Profile", "See a detailed view of my profile.", "Profile", "Academic", "~/images/data.jpg"),
-            new Feature( "My Info", "See a detailed view of my information.", "MyCals", "Academic", "~/images/cals.jpg"),
-            new Feature( "Grades", "See a detailed view of the whole group's grades.", "AllCals", "Academic", "~/images/classroom.jpg"),
-            new Feature( "Download my Grades", "Download a copy of my semester's grades.", "Download Cals", "Academic", "~/images/grades.jpg")
+            new Feature( "My Grades", "See a detailed view of my semester.", "MyCals", "Academic", "~/images/cals.jpg", "Check Grades"),
+            new Feature( "My Profile", "See a detailed view of my profile.", "MyProfile", "Academic", "~/images/data.jpg", "View"),
+            new Feature( "My Info", "See a detailed view of my information.", "MyCals", "Academic", "~/images/cals.jpg", "View"),
+            new Feature( "Grades", "See a detailed view of the whole group's grades.", "AllCals", "Academic", "~/images/classroom.jpg", "All Grades"),
+            new Feature( "Download my Grades", "Download a copy of my semester's grades.", "Download Cals", "Academic", "~/images/grades.jpg", "Download")
         };
         public static List<Feature> GetFeatures(Boolean[] options){
             List<Feature> result = new List<Feature>();

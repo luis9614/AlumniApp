@@ -4,7 +4,7 @@ namespace AlumniAppCore.Models
 {
     public abstract class User
     {
-        public Boolean[] Permissions = new Boolean[5];
+        public readonly Boolean[] Permissions = new Boolean[5];
         public string Name
         {
             get;

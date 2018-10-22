@@ -12,10 +12,10 @@
 </div>
 
 <div class="container">
-    <div class="row container" style="margin: auto;">
+    <div class="container row" style="margin: auto;">
         @foreach (var opt in ViewData["Options"] as IList<Feature>)
         {
-                <div class="container col-sm-4">
+                <div class="container col-sm-4 top-buffer">
                     <div class="card">
                         <!-- Card image -->
                         <img class="card-img-top" src="~/images/students.jpg" alt="Card image cap">
@@ -26,10 +26,11 @@
                             <!-- Text -->
                             <p class="card-text">@opt.Description</p>
                             <!-- Button -->
-                            <input type="button" class="btn btn-outline-dark" value="LogIn" onclick="location.href='@Url.Action("LogIn", "Session")'" />
+                            <input type="button" class="btn btn-outline-dark" value=@opt.Button onclick="location.href='@Url.Action(opt.Method, opt.Controller)'" />
                         </div>
                     </div>
                 </div>
+                <br />
         }
     </div>
 </div>

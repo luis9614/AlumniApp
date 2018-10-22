@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,9 +15,12 @@
     <Folder Include="Content\images\" />
     <Folder Include="Views\Session\" />
     <Folder Include="lib\" />
+    <Folder Include="Views\Academic\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Models\Middleware.cs" />
+    <Compile Remove="Models\EmptyClass.cs" />
+    <Compile Remove="Views\Academic\MyCals.cshtml.cs" />
     <Compile Remove="Models\EmptyClass.cs" />
   </ItemGroup>
   <ItemGroup>

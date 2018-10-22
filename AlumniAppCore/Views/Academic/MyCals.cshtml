@@ -1,0 +1,37 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<Alumni.App.Db.DTO.UserSubjectDto>
+@{
+}
+<div class="container">
+    <br />
+    <h1>My Cals</h1>
+    <br />
+</div>
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Subject</th>
+                <th scope="col">First Term</th>
+                <th scope="col">Second Term</th>
+                <th scope="col">Final Term</th>
+                <th scope="col">Average</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Subject in Model)
+        {
+            <tr>
+                <th scope="row">@Subject.SubjectName</th>
+                <td>@Subject.Grade1</td>
+                <td>@Subject.Grade2</td>
+                <td>@Subject.Grade3</td>
+                <td>@Subject.AverageSubject</td>
+            </tr>
+    }
+        </tbody>
+    </table>
+</div>
+

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace AlumniAppCore
 {
@@ -46,8 +47,17 @@ namespace AlumniAppCore
 
             //services.Configure<Expo>
             services.Configure<AlumniConfig>(Configuration.GetSection("ExportOptions"));
+
             // Added Singleton for configuration file
-            services.AddSingleton<IConfiguration>(Configuration);
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            ////services.AddSingleton<IConfiguration>(Configuration);
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.Cookie.HttpOnly = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +76,7 @@ namespace AlumniAppCore
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

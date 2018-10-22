@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AlumniAppCore.Models;
+using AlumniAppCore.Models.Utils;
 using Alumni.App.Db;
 using Alumni.App.Db.DTO;
 using AlumniAppCore.Controllers;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,8 +20,12 @@ namespace AlumniAppCore.Controllers
     public class SessionController : Controller
     {
         private readonly IOptions<AlumniConfig> _configuration;
-        public SessionController(IOptions<AlumniConfig> configuration){
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+
+        public SessionController(IOptions<AlumniConfig> configuration, IHttpContextAccessor httpContextAccessor){
             this._configuration = configuration;
+            this._httpContextAccessor = httpContextAccessor;
         }
         // GET: /<controller>/
         public IActionResult Index()
@@ -39,12 +45,20 @@ namespace AlumniAppCore.Controllers
 
             if (ModelState.IsValid)
             {
-                DBConnection UserDB = DBConnection.GetInstance;
+                UserDBService UserDB = UserDBService.GetInstance;
                 User CurrentUser = UserFactory.LogInUser(user);
                 if(CurrentUser != null)
                 {
-                    TempData["User"] = CurrentUser.UserName;
-                    TempData["Password"] = CurrentUser.Password;
+                    // Debugging Purposes
+                    //TempData["User"] = CurrentUser.UserName;
+                    //TempData["Password"] = CurrentUser.Password;
+
+                    //SetCookie("User", CurrentUser.UserName, 2);
+                    //SetCookie("Password", CurrentUser.UserName, 2);
+
+                    HttpContext.Session.SetString(CookieKeys.USERNAME, CurrentUser.UserName);
+                    HttpContext.Session.SetString(CookieKeys.PASSWORD, CurrentUser.Password);
+
                     return RedirectToAction("Overview", "Home");
                     //return Content(CurrentUser.ToString());
                 }else{
@@ -59,15 +73,26 @@ namespace AlumniAppCore.Controllers
 
         }
 
-        /*[HttpGet]
-        public IActionResult GetUser(string Name, string LastName, string SecondLastName, string FullName, string Address, string EMail, string Password, string UserName, int IdUser, int AccountType){
-            UserCreator UserFactory = new UserCreator();
-            User newUser = UserFactory.CreateUser(AccountType, Name, LastName, SecondLastName, FullName,Address, EMail, Password, UserName, IdUser);
-            //CreateUser(int AccountType, string Name, string LastName, string SecondLastName, string FullName, string Address, string EMail, string Password, string UserName, int IdUser)
-            TempData["CurrentUser"] = JsonConvert.SerializeObject(newUser) ;
-            TempData["LOL"] = newUser.ToString();
-            //return Content(newUser.ToString());
-            return RedirectToAction("Overview", "Home");
-        }*/
+        // Cookie Related Stuff
+
+        public string Get(string key)
+        {
+            return Request.Cookies[key];
+        }
+
+        private void SetCookie(string key, string value, int? expireTime)
+        {
+            CookieOptions option = new CookieOptions();
+            if (expireTime.HasValue)
+                option.Expires = DateTime.Now.AddMinutes(expireTime.Value);
+            else
+                option.Expires = DateTime.Now.AddMilliseconds(10);
+            Response.Cookies.Append(key, value, option);
+        }
+
+        private void Remove(string key)
+        {
+            Response.Cookies.Delete(key);
+        }
     }
 }
