@@ -23,7 +23,7 @@ namespace AlumniAppCore.Models.Adapters
             GroupGrades GGrades = new GroupGrades();
             DataTable Grades = new DataTable();
             List<UserSubjectDto> Subjects = _db._service.GetSubjectsAndGradesByUser(UserId);
-
+            UserDto Teacher = _dbUsers._service.GetProfile(UserId);
             // datatable filling
             Grades.Clear();
             Grades.Columns.Add("Student");
@@ -48,6 +48,7 @@ namespace AlumniAppCore.Models.Adapters
             }
             GGrades.SubjectName = Subjects[0].SubjectName;
             GGrades.Grades = Grades;
+            GGrades.TeacherName = Teacher.FullName;
             return GGrades;
         }
 
@@ -89,6 +90,11 @@ namespace AlumniAppCore.Models.Adapters
     public class GroupGrades
     {
         public string SubjectName
+        {
+            get;
+            set;
+        }
+        public string TeacherName
         {
             get;
             set;
