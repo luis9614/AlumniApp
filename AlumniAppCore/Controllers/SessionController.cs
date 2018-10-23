@@ -33,6 +33,12 @@ namespace AlumniAppCore.Controllers
             return View();
         }
 
+        public IActionResult Logout(){
+            HttpContext.Session.SetString(CookieKeys.USERNAME, "");
+            HttpContext.Session.SetString(CookieKeys.PASSWORD, "");
+            return RedirectToAction("Index", "Home");
+        }
+
         [HttpGet]
         public IActionResult LogIn(){
             return View();

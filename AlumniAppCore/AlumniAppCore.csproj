@@ -16,12 +16,18 @@
     <Folder Include="Views\Session\" />
     <Folder Include="lib\" />
     <Folder Include="Views\Academic\" />
+    <Folder Include="Controllers\Services\" />
+    <Folder Include="Views\Settings\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Models\Middleware.cs" />
     <Compile Remove="Models\EmptyClass.cs" />
     <Compile Remove="Views\Academic\MyCals.cshtml.cs" />
     <Compile Remove="Models\EmptyClass.cs" />
+    <Compile Remove="Models\UserDLLAdapter.cs" />
+    <Compile Remove="Controllers\CookieManager.cs" />
+    <Compile Remove="Models\WordExporter.cs" />
+    <Compile Remove="Models\TXTExporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Alumni.App.Db">

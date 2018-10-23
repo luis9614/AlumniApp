@@ -23,7 +23,11 @@ namespace AlumniAppCore.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            if(string.IsNullOrEmpty(HttpContext.Session.GetString(CookieKeys.USERNAME))){
+                return View();
+            }
+            return RedirectToAction("Overview", "Home");
+
         }
 
         public IActionResult Overview(string UserName, string Password)

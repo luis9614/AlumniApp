@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model AlumniAppCore.AlumniConfig
+@{
+}
+<div class="container">
+    <br />
+    <h1>Settings</h1>
+    <br />
+</div>
+<div class="container">
+    <div class="card w-75" style="float: center;margin: 0 auto;">
+        <div class="card-body">
+            <h5 class="card-title">Export Options</h5>
+            @*<form action="/settings/settingsmanager" method="post">*@
+            @if (Model.ExportTXT)
+            {
+                <h5>Currently exporting to TXT</h5>
+            }
+            else
+            {
+                <h5>Currently exporting to Word</h5>
+            }
+            <input type="button" class="btn btn-outline-dark" value="Change To TXT" onclick="location.href='@Url.Action("SettingsMan", "Settings", new { ExportTXT = true })'" />
+            <input type="button" class="btn btn-outline-dark" value="Change To Word" onclick="location.href='@Url.Action("SettingsMan", "Settings", new { ExportTXT = false})'" />
+            @*<input type="button" value="Some text" onclick="@("window.location.href='" + @Url.Action("actionName", "controllerName") + "'");" />
+            <input type="submit" class="btn btn-outline-dark align-right" value="Export TXT" style="float: right;" />
+            <input type="submit" class="btn btn-outline-dark align-right" value="Export Word" style="float: right;" />*@
+            @*</form>*@
+        </div>
+    </div>
+</div>

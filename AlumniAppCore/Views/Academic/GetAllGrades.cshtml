@@ -1,0 +1,34 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model AlumniAppCore.Models.Adapters.GroupGrades
+@{
+}
+<div class="container">
+    <br />
+    <h1>@Model.SubjectName Grades</h1>
+    <br />
+</div>
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                @foreach (System.Data.DataColumn col in Model.Grades.Columns)
+                {
+                    <th scope="col">@col.Caption</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (System.Data.DataRow row in Model.Grades.Rows)
+            {
+                <tr>
+                    @foreach (var cell in row.ItemArray)
+                    {
+                        <td>@cell.ToString()</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

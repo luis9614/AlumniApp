@@ -11,14 +11,51 @@ namespace AlumniAppCore.Models.Adapters
     public class GradesAdapter : IGrades
     {
         private readonly AcademicService _db;
+        private readonly UserDBService _dbUsers;
         public GradesAdapter(){
             _db = AcademicService.GetInstance;
+            _dbUsers = UserDBService.GetInstance;
+        }
+
+        public GroupGrades GetAllGrades(int UserId)
+        {
+
+            GroupGrades GGrades = new GroupGrades();
+            DataTable Grades = new DataTable();
+            List<UserSubjectDto> Subjects = _db._service.GetSubjectsAndGradesByUser(UserId);
+
+            // datatable filling
+            Grades.Clear();
+            Grades.Columns.Add("Student");
+            Grades.Columns.Add("Subject");
+            Grades.Columns.Add("First Term");
+            Grades.Columns.Add("Second Term");
+            Grades.Columns.Add("Final Term");
+            Grades.Columns.Add("Average");
+
+            foreach (var Subject in Subjects)
+            {
+                DataRow AuxRow = Grades.NewRow();
+                UserDto AuxUser = _dbUsers._service.GetProfile(Subject.IdUser);
+                AuxRow["Student"] = AuxUser.FullName;
+                AuxRow["Subject"] = Subject.SubjectName;
+                AuxRow["First Term"] = Subject.Grade1;
+                AuxRow["Second Term"] = Subject.Grade2;
+                AuxRow["Final Term"] = Subject.Grade2;
+                AuxRow["Average"] = Subject.AverageSubject;
+
+                Grades.Rows.Add(AuxRow);
+            }
+            GGrades.SubjectName = Subjects[0].SubjectName;
+            GGrades.Grades = Grades;
+            return GGrades;
         }
 
         public DataTable GetGrades(int UserId)
         {
             DataTable Grades = new DataTable();
             List<UserSubjectDto> Subjects = _db._service.GetSubjectsAndGradesByUser(UserId);
+
 
             // datatable filling
             Grades.Clear();
@@ -46,6 +83,21 @@ namespace AlumniAppCore.Models.Adapters
     public interface IGrades
     {
         DataTable GetGrades(int UserId);
+        GroupGrades GetAllGrades(int UserId);
+    }
+
+    public class GroupGrades
+    {
+        public string SubjectName
+        {
+            get;
+            set;
+        }
+        public DataTable Grades
+        {
+            get;
+            set;
+        }
     }
 
     // Profile Adapter
