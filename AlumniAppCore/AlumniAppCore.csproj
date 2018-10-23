@@ -30,6 +30,11 @@
     <Compile Remove="Controllers\CookieManager.cs" />
     <Compile Remove="Models\WordExporter.cs" />
     <Compile Remove="Models\TXTExporter.cs" />
+    <Compile Remove="Models\User.cs" />
+    <Compile Remove="Models\Teacher.cs" />
+    <Compile Remove="Models\Supervisor.cs" />
+    <Compile Remove="Models\UserCreator.cs" />
+    <Compile Remove="Models\UserLogIn.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Alumni.App.Db">
