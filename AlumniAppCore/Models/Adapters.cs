@@ -137,6 +137,11 @@ namespace AlumniAppCore.Models.Adapters
             AuxRow["Value"] = LegacyProfile.Email;
             Profile.Rows.Add(AuxRow);
 
+            AuxRow = Profile.NewRow();
+            AuxRow["Key"] = "ID";
+            AuxRow["Value"] = LegacyProfile.IdUser;
+            Profile.Rows.Add(AuxRow);
+
             return Profile;
         }
     }
