@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 
+using GemBox.Document;
+
 namespace AlumniAppCore.Models.Exporter
 {
     public abstract class IExporter
@@ -68,8 +70,9 @@ namespace AlumniAppCore.Models.Exporter
     {
         public override DownloadableGrades Export(DataTable Grades)
         {
-            var TempPath = System.IO.Path.GetTempFileName();
-            StreamWriter writer = new StreamWriter(TempPath);
+            var TempPath = System.IO.Path.GetTempFileName() + Guid.NewGuid().ToString() + ".docx"; ;
+            ComponentInfo.SetLicense("FREE-LIMITED-KEY");
+            var doc = new DocumentModel();
 
             foreach (DataRow row in Grades.Rows)
             {
@@ -79,17 +82,14 @@ namespace AlumniAppCore.Models.Exporter
                     items.Add(row[col.ColumnName].ToString());
                 }
                 string Line = string.Join(",", items.ToArray());
-                writer.Write(Line);
-                writer.WriteLine();
+                doc.Sections.Add(new Section(doc, new Paragraph(doc, Line)));
             }
-            writer.Close();
-
+            doc.Save(TempPath);
             DownloadableGrades DGrades = new DownloadableGrades();
 
 
             DGrades.FileName = "grades.docx";
             DGrades.Data = File.ReadAllBytes(TempPath);
-            writer.Dispose();
             return DGrades;
         }
     }

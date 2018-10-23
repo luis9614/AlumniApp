@@ -7,13 +7,13 @@ namespace AlumniAppCore.Models
     {
         OWN_CALS,       //0
         OWN_PROFILE,    // 1
-        BASIC_INFO,     // 2
+        //BASIC_INFO,     // 2
         ALL_CALS,       // 3
         DOWNLOAD_CALS,  // 4
     }
     public class EnumUtils{
         public static string[] GetOptions(){
-            string[] opt = { "own_cals", "own_profile", "basic_info", "all_cals", "download_cals" };
+            string[] opt = { "own_cals", "own_profile", /*"basic_info",*/ "all_cals", "download_cals" };
             return opt;
         }
     }
@@ -64,7 +64,7 @@ namespace AlumniAppCore.Models
         public static Feature[] Features = {
             new Feature( "My Grades", "See a detailed view of my semester.", "MyCals", "Academic", "~/images/mycals.jpg", "Check Grades"),
             new Feature( "My Profile", "See a detailed view of my profile.", "MyProfile", "Academic", "~/images/profile.png", "View"),
-            new Feature( "My Info", "See a detailed view of my information.", "MyCals", "Academic", "~/images/cals.jpg", "View"),
+            //new Feature( "My Info", "See a detailed view of my information.", "MyCals", "Academic", "~/images/cals.jpg", "View"),
             new Feature( "Grades", "See a detailed view of the whole group's grades.", "GetAllGrades", "Academic", "~/images/classroom.jpg", "All Grades"),
             new Feature( "Download my Grades", "Download a copy of my semester's grades.", "DownloadGrades", "Academic", "~/images/grades.jpg", "Download")
         };
